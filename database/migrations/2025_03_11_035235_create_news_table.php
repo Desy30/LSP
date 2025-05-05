@@ -21,14 +21,13 @@ return new class extends Migration
             $table->text('image');
             $table->string('slug');
             $table->text('content');
-            $table->enum('status',['draft', 'published']);
+            $table->enum('status', ['draft', 'published']);
             $table->timestamps();
 
             $table->foreign('author_id')->references('id')->on('author');
             $table->foreign('editor_id')->references('id')->on('editor');
             $table->foreign('category_id')->references('id')->on('categories');
-            
-            
+
         });
     }
 

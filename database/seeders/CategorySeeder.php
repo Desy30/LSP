@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\CategoryModel;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
@@ -15,11 +14,11 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             'Politik', 'Ekonomi', 'Sosial', 'Teknologi',
-            'Olahraga'
+            'Olahraga',
         ];
-        foreach ($categories as $caterory){
+        foreach ($categories as $caterory) {
             CategoryModel::create([
-                'name' => $caterory
+                'name' => $caterory,
             ]);
         }
     }

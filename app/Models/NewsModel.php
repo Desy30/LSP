@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class NewsModel extends Model
 {
-    protected $table ='news';
+    protected $table = 'news';
 
-    protected $fillable =[
+    protected $fillable = [
         'author_id',
         'editor_id',
         'category_id',
@@ -19,19 +19,22 @@ class NewsModel extends Model
         'content',
         'status',
     ];
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(CategoryModel::class,
-        'category_id', 'id');
-    }   
+            'category_id', 'id');
+    }
+
     public function author(): BelongsTo
     {
         return $this->belongsTo(AuthorModel::class,
-        'author_id', 'id');
-    }  
-   public function editor(): BelongsTo
-   {
-       return $this->belongsTo(EditorModel::class, 
-       'editor_id', 'id');
-   }    
+            'author_id', 'id');
+    }
+
+    public function editor(): BelongsTo
+    {
+        return $this->belongsTo(EditorModel::class,
+            'editor_id', 'id');
+    }
 }

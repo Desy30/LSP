@@ -5,31 +5,33 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 class AuthenticationController extends Controller
 {
     public function loginPage()
     {
         return view('authentication.login');
     }
+
     public function login(Request $request)
     {
         $request->validate([
-            'username' => "required|string",
-            'password' => "required|string"
+            'username' => 'required|string',
+            'password' => 'required|string',
         ]);
 
         $credentials = $request->only([
             'username',
-            'password'
+            'password',
         ]);
 
         if (Auth::attempt($credentials)) {
             return redirect()->route('news');
         }
+
         return redirect()->route('login');
     }
-    public function logout(Request$request)
+
+    public function logout(Request $request)
     {
         Auth::logout();
 

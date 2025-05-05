@@ -1,68 +1,72 @@
 @extends('layouting.guest.master')
-@section('title', 'news')
+@section('title', 'News')
 @section('content')
-    <h5>News</h5>
-    <a href="{{ route('logout') }}" class="btn btn-danger">Logout</a>
-    <ol>
-        <li>Nama:{{ auth()->user()->fullname }}</li>
-        <li>role:{{ auth()->user()->role }}</li>
-    </ol>
-    @haspermission('create news')
-        <div class="text-end">
-            <a href="{{ route('news.create') }}" class= "btn btn-primary"> Tambah</a>
+
+    <div class="d-flex justify-content-between align-items-center">
+        <h5>News</h5>
+        <a href="{{ route('logout') }}" class="btn btn-danger">Logout</a>
+    </div>
+
+    <div class="card shadow-lg bg-light" style="background-color: #f8d7da;">
+        <div class="card-body">
+            <h5 class="card-title">User Information</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <strong>Nama:</strong> {{ auth()->user()->fullname }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Role:</strong> {{ auth()->user()->role }}
+                </li>
+            </ul>
         </div>
-    @endhaspermission
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Category</th>
-                <th scope="col">Title</th>
-                <th scope="col">Image</th>
-                <th scope="col">Author</th>
-                <th scope="col">Editor</th>
-                <th scope="col">Status</th>
-                @haspermission('update news')
-                    <th scope="col">Aksi</th>
-                @endhaspermission
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($news as $index => $item)
-                <tr>
-                    <th scope="row">{{ $index + 1 }}</th>
-                    <td>{{ $item->category->name }}</td>
-                    <td>{{ $item->title }}</td>
-                    <td><img src="{{ asset('storage/' . $item->image) }}" width="50" height="50"
-                            alt="{{ $item->title }}"></td>
-                    <td>{{ $item->author->user->fullname }}</td>
-                    <td>{{ $item->editor->user->fullname }}</td>
-                    <td>
-                        <span class="badge {{ $item->status == 'draft' ? 'bg-danger' : 'bg-success' }}">
-                            {{ $item->status }}</span>
-                    </td>
+    </div>
+
+
+    @haspermission('create news')
+    <div class="text-end my-3">
+        <a href="{{ route('news.create') }}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Tambah Berita
+        </a>
+    </div>
+@endhaspermission
+
+
+<div class="row">
+    @foreach ($news as $index => $item)
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm border-light">
+                <img src="{{ asset('storage/' . $item->image) }}" class="card-img-top" alt="{{ $item->title }}" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ $item->title }}</h5>
+                    <p class="card-text">
+                        <strong>Category:</strong> {{ $item->category->name }}<br>
+                        <strong>Author:</strong> {{ $item->author->user->fullname }}<br>
+                        <strong>Editor:</strong> {{ $item->editor->user->fullname }}<br>
+                        <span class="badge {{ $item->status == 'draft' ? 'bg-danger' : 'bg-success' }}">{{ ucfirst($item->status) }}</span>
+                    </p>
+
                     @haspermission('update news')
-                        <td>
-                            <a href="{{ route('news.edit', $item->id) }}">
-                                <span class="material-symbols-outlined">
-                                    edit
-                                </span>
+                        <div class="d-flex justify-content-between mt-3">
+                            <!-- Edit Button -->
+                            <a href="{{ route('news.edit', $item->id) }}" class="btn btn-sm btn-info text-white" style="transition: all 0.3s ease;">
+                                <i class="bi bi-pencil-square"></i> Edit
                             </a>
-                            <a>
-                                <form action="{{ route('news.destroy', $item->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button>
-                                        <span class="material-symbols-outlined">
-                                            delete
-                                        </span>
-                                    </button>
-                                </form>
-                            </a>
-                        </td>
+
+                            <!-- Delete Button -->
+                            <form action="{{ route('news.destroy', $item->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger" style="transition: all 0.3s ease;">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </form>
+                        </div>
                     @endhaspermission
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+                </div>
+            </div>
+        </div>
+    @endforeach
+</div>
+
+
 @endsection
