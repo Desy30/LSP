@@ -9,12 +9,13 @@ class EditorModel extends Model
 {
     protected $table = 'editor';
 
-    protected $fillable =[
+    protected $fillable = [
         'user_id',
     ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(user::class,
-        'user_id', 'id');
+            'user_id', 'id');
     }
 }

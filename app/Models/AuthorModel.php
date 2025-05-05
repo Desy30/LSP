@@ -7,14 +7,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AuthorModel extends Model
 {
-    protected $table='Author';
+    protected $table = 'Author';
+
     protected $fillable = [
         'user_id',
-        'phone_number'
+        'phone_number',
     ];
-public function user(): BelongsTo
-{
-    return $this->belongsTo(User::class, 
-    'user_id', 'id');
-}
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class,
+            'user_id', 'id');
     }
+}

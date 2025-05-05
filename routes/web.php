@@ -2,14 +2,13 @@
 
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\NewsController;
-use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware('guest')->group(function(){
+Route::middleware('guest')->group(function () {
     Route::get('login', [AuthenticationController::class, 'loginPage'])->name('login');
     Route::post('login', [AuthenticationController::class, 'login'])->name('login.process');
 });
