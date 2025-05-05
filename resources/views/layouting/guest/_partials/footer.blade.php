@@ -1,0 +1,1 @@
+<p>@ copyright{{ now()->year }}{{ env('app_name') }}</p>
